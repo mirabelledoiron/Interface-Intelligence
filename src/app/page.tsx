@@ -1,103 +1,300 @@
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import {
+  Hammer,
+  ShieldCheck,
+  FileText,
+  ArrowRight,
+  Layers,
+  Palette,
+  Type,
+  Square,
+  Workflow,
+  Braces,
+  FileCode,
+  Zap,
+} from "lucide-react";
+import { sampleSystem } from "@/lib/sample-system";
+
+const workflows = [
+  {
+    href: "/build",
+    title: "Build Component",
+    description:
+      "Generate a component spec grounded in your tokens, patterns, and accessibility requirements.",
+    icon: Hammer,
+    color: "text-primary",
+    bg: "bg-primary/10",
+  },
+  {
+    href: "/validate",
+    title: "Validate Code",
+    description:
+      "Check component code against your system for token adherence, consistency, and a11y compliance.",
+    icon: ShieldCheck,
+    color: "text-secondary",
+    bg: "bg-secondary/10",
+  },
+  {
+    href: "/docs",
+    title: "Generate Docs",
+    description:
+      "Create comprehensive documentation with usage examples, do/don't guidelines, and a11y notes.",
+    icon: FileText,
+    color: "text-muted-foreground",
+    bg: "bg-muted",
+  },
+];
+
+const tokenIcons: Record<string, React.ElementType> = {
+  Colors: Palette,
+  "Dark Mode": Palette,
+  Spacing: Layers,
+  Typography: Type,
+  Radius: Square,
+  Shadows: Layers,
+};
+
+export default function DashboardPage() {
+  const system = sampleSystem;
+  const totalTokens = system.tokenGroups.reduce(
+    (sum, g) => sum + g.tokens.length,
+    0
+  );
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="space-y-10">
+      {/* Hero */}
+      <div className="space-y-3">
+        <h1 className="text-3xl font-semibold tracking-tight">
+          Interface Intelligence
+        </h1>
+        <p className="text-muted-foreground max-w-2xl text-base leading-relaxed">
+          AI-powered design system co-pilot. Build components, validate
+          consistency, and generate documentation, all grounded in your actual
+          design system. AI should not generate from scratch. It should generate within
+          your system.
+        </p>
+      </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* How it works */}
+      <section aria-labelledby="how-heading">
+        <h2 id="how-heading" className="text-lg font-medium mb-2">
+          Powered by Output.ai
+        </h2>
+        <p className="text-sm text-muted-foreground mb-4 max-w-2xl">
+          Interface Intelligence is built on Output.ai, an open-source AI
+          workflow framework by GrowthX. Each workflow uses version-controlled
+          .prompt files with Liquid templates, Zod-validated schemas, and
+          structured step execution, the same patterns used in production
+          Output.ai deployments.
+        </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="flex items-center gap-2 mb-2">
+                <FileCode className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <span className="text-sm font-medium">.prompt Files</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                YAML frontmatter for model config + Liquid templates for
+                variable injection. Version-controlled and reviewable in PRs.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Braces className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <span className="text-sm font-medium">Zod Schemas</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Every workflow input and output is typed and validated.
+                Structured data in, structured data out. No guessing.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Zap className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <span className="text-sm font-medium">Token Injection</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Your design tokens are injected into every prompt at runtime.
+                The AI references your actual values, not generic ones.
+              </p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="flex items-center gap-2 mb-2">
+                <Workflow className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                <span className="text-sm font-medium">Step Execution</span>
+              </div>
+              <p className="text-sm text-muted-foreground">
+                Each workflow runs as isolated steps. In production with
+                Output.ai, these gain Temporal orchestration, tracing, and
+                caching.
+              </p>
+            </CardContent>
+          </Card>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </section>
+
+      <Separator />
+
+      {/* System Overview */}
+      <section aria-labelledby="system-heading">
+        <h2 id="system-heading" className="text-lg font-medium mb-4">
+          {system.name}
+        </h2>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="text-2xl font-semibold">{totalTokens}</div>
+              <div className="text-sm text-muted-foreground">Design Tokens</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="text-2xl font-semibold">
+                {system.components.length}
+              </div>
+              <div className="text-sm text-muted-foreground">Components</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="text-2xl font-semibold">
+                {system.tokenGroups.length}
+              </div>
+              <div className="text-sm text-muted-foreground">Token Groups</div>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-4 pb-3 px-4">
+              <div className="text-2xl font-semibold">AA</div>
+              <div className="text-sm text-muted-foreground">WCAG Target</div>
+            </CardContent>
+          </Card>
+        </div>
+      </section>
+
+      {/* Token Groups */}
+      <section aria-labelledby="tokens-heading">
+        <h2 id="tokens-heading" className="text-lg font-medium mb-4">
+          Token Overview
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {system.tokenGroups.map((group) => {
+            const Icon = tokenIcons[group.name] ?? Layers;
+            return (
+              <Card key={group.name} className="overflow-hidden">
+                <CardHeader className="pb-2 pt-4 px-4">
+                  <CardTitle className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-2">
+                      <Icon className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+                      {group.name}
+                    </span>
+                    <Badge variant="secondary" className="text-sm">
+                      {group.tokens.length}
+                    </Badge>
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="px-4 pb-4">
+                  <div className="flex flex-wrap gap-1.5">
+                    {group.tokens.slice(0, 6).map((token) => (
+                      <div
+                        key={token.name}
+                        className="flex items-center gap-1 rounded bg-muted/50 px-1.5 py-0.5"
+                      >
+                        {token.type === "color" && (
+                          <span
+                            className="inline-block h-2.5 w-2.5 rounded-sm border border-border"
+                            style={{ backgroundColor: token.value }}
+                            aria-hidden="true"
+                          />
+                        )}
+                        <span className="text-sm font-mono text-muted-foreground">
+                          {token.name}
+                        </span>
+                      </div>
+                    ))}
+                    {group.tokens.length > 6 && (
+                      <span className="text-sm text-muted-foreground px-1.5 py-0.5">
+                        +{group.tokens.length - 6} more
+                      </span>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Workflows */}
+      <section aria-labelledby="workflows-heading">
+        <h2 id="workflows-heading" className="text-lg font-medium mb-4">
+          Workflows
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {workflows.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link key={item.href} href={item.href} className="group block">
+                <Card className="h-full transition-colors hover:border-foreground/20">
+                  <CardHeader className="pb-2">
+                    <div
+                      className={`inline-flex h-9 w-9 items-center justify-center rounded-md ${item.bg}`}
+                    >
+                      <Icon className={`h-5 w-5 ${item.color}`} aria-hidden="true" />
+                    </div>
+                  </CardHeader>
+                  <CardContent>
+                    <h3 className="font-medium mb-1 flex items-center gap-1">
+                      {item.title}
+                      <ArrowRight className="h-3.5 w-3.5 opacity-0 -translate-x-1 transition-all group-hover:opacity-100 group-hover:translate-x-0" aria-hidden="true" />
+                    </h3>
+                    <p className="text-sm text-muted-foreground">
+                      {item.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* Components */}
+      <section aria-labelledby="components-heading">
+        <h2 id="components-heading" className="text-lg font-medium mb-4">
+          Components
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {system.components.map((comp) => (
+            <Card key={comp.name}>
+              <CardContent className="pt-4 pb-3 px-4">
+                <div className="flex items-center justify-between mb-1">
+                  <span className="font-medium text-sm">{comp.name}</span>
+                  <Badge variant="secondary" className="text-sm">
+                    {comp.variants.length} variants
+                  </Badge>
+                </div>
+                <p className="text-sm text-muted-foreground line-clamp-2">
+                  {comp.description}
+                </p>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }
