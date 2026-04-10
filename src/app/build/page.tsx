@@ -23,16 +23,16 @@ import {
 } from "lucide-react";
 
 const componentTypes = [
-  "ds-button",
-  "ds-card",
-  "ds-input",
-  "ds-badge",
-  "ds-modal",
-  "ds-select",
-  "ds-tabs",
-  "ds-toast",
-  "ds-tooltip",
-  "ds-table",
+  "Button",
+  "Card",
+  "Input",
+  "Badge",
+  "Modal",
+  "Select",
+  "Tabs",
+  "Toast",
+  "Tooltip",
+  "Table",
 ];
 
 export default function BuildPage() {

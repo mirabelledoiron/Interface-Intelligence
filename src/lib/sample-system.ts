@@ -93,25 +93,25 @@ export const sampleSystem: DesignSystem = {
   ],
   components: [
     {
-      name: "ds-button",
+      name: "Button",
       description: "Web Component (<ds-button>). Pill-radius (ds-radius-pill), min-height 2.75rem. Primary variant uses accent color with inverse text and shadow-sm. Hover lifts 1px via translateY(-1px). Focus ring is accent at 60% mix with white, 2px solid, 2px offset. Disabled state at 0.55 opacity with cursor not-allowed.",
       variants: ["primary", "secondary", "ghost"],
       props: ["variant", "size", "disabled"],
     },
     {
-      name: "ds-card",
+      name: "Card",
       description: "Web Component (<ds-card>). Content container using backdrop-filter blur(16px), bg-surface at 92% opacity via color-mix, border-subtle, radius-lg + 0.125rem. Elevated variant adds shadow-md. Uses slot-based composition: slot='eyebrow' (uppercase kicker, accent color, letter-spacing 0.14em), slot='title' (font-size-500, snug line-height), default slot (body, text-secondary), slot='footer' (flex row with gap-3).",
       variants: ["default", "elevated"],
       props: ["elevated"],
     },
     {
-      name: "ds-input",
+      name: "Input",
       description: "Web Component (<ds-input>). Min-height 3rem, radius-md, border-subtle, bg-elevated. Focus state: border color-mix(accent 48%, white), box-shadow 0 0 0 3px color-mix(accent 18%, transparent). Label is font-size-200, semibold. Helper text is font-size-200, text-secondary. Emits custom events: ds-input (on input) and ds-change (on change) with detail.value.",
       variants: ["default"],
       props: ["label", "placeholder", "value", "helper", "type"],
     },
     {
-      name: "ds-badge",
+      name: "Badge",
       description: "Web Component (<ds-badge>). Pill-shaped (ds-radius-pill), min-height 1.75rem, font-size-100, semibold, letter-spacing 0.02em. Tones use color-mix for transparent backgrounds: neutral (surface-subtle bg, text-secondary), accent (accent at 12%, accent text), success (success at 14%, success text), warning (warning at 12%, warning text). All tones include matching border at slightly higher opacity.",
       variants: ["neutral", "accent", "success", "warning"],
       props: ["tone"],
