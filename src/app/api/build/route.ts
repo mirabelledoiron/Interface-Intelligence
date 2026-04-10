@@ -7,16 +7,17 @@ import { inputSchema } from "../../../../workflows/component-builder/workflow";
 import type { BuildResult } from "@/lib/types";
 
 export async function POST(request: Request) {
+  const raw = await request.json();
+  const input = inputSchema.parse(raw);
+
+  if (!process.env.ANTHROPIC_API_KEY) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    return NextResponse.json(mockBuildResult);
+  }
+
+  let prompt;
   try {
-    const raw = await request.json();
-    const input = inputSchema.parse(raw);
-
-    if (!process.env.ANTHROPIC_API_KEY) {
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      return NextResponse.json(mockBuildResult);
-    }
-
-    const prompt = await loadPrompt("component-builder", "build.prompt", {
+    prompt = await loadPrompt("component-builder", "build.prompt", {
       system_name: sampleSystem.name,
       token_groups: sampleSystem.tokenGroups,
       components: sampleSystem.components,
@@ -25,36 +26,43 @@ export async function POST(request: Request) {
       constraints: input.constraints || "None specified",
       accessibility_level: input.accessibilityLevel,
     });
+  } catch (err) {
+    console.error("Prompt engine error:", err);
+    return NextResponse.json(mockBuildResult);
+  }
 
+  let message;
+  try {
     const anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
-    const message = await anthropic.messages.create({
+    message = await anthropic.messages.create({
       model: prompt.config.model,
       max_tokens: prompt.config.max_tokens,
       temperature: prompt.config.temperature,
       system: prompt.system,
       messages: [{ role: "user", content: prompt.user }],
     });
-
-    const text =
-      message.content[0].type === "text" ? message.content[0].text : "";
-
-    let result: BuildResult;
-    try {
-      const cleaned = text.replace(/```json\n?/g, "").replace(/```\n?/g, "");
-      result = JSON.parse(cleaned) as BuildResult;
-    } catch {
-      result = {
-        ...mockBuildResult,
-        reasoning: "Live AI response (parsed with fallback): " + text.slice(0, 500),
-      };
-    }
-
-    return NextResponse.json(result);
-  } catch (error) {
-    console.error("Build API error:", error);
+  } catch (err) {
+    console.error("Claude API error:", err);
     return NextResponse.json(mockBuildResult);
+  }
+
+  const text =
+    message.content[0].type === "text" ? message.content[0].text : "";
+
+  console.log("Claude response length:", text.length);
+
+  try {
+    const cleaned = text.replace(/```json\n?/g, "").replace(/```\n?/g, "");
+    const result = JSON.parse(cleaned) as BuildResult;
+    return NextResponse.json(result);
+  } catch {
+    console.error("JSON parse failed, raw response:", text.slice(0, 300));
+    return NextResponse.json({
+      ...mockBuildResult,
+      reasoning: text.slice(0, 1000),
+    });
   }
 }
