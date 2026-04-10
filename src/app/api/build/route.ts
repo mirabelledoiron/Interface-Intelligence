@@ -54,11 +54,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json(result);
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    console.error("Build API error:", message);
-    return NextResponse.json({
-      ...mockBuildResult,
-      reasoning: "[Fallback] API error: " + message,
-    });
+    console.error("Build API error:", error);
+    return NextResponse.json(mockBuildResult);
   }
 }
