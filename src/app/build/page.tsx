@@ -11,6 +11,7 @@ import { SectionCard } from "@/components/section-card";
 import { TokenPanel } from "@/components/token-panel";
 import { CodeBlock } from "@/components/code-block";
 import { GeneratingState } from "@/components/loading-states";
+import { InspectPrompt } from "@/components/inspect-prompt";
 import { sampleSystem } from "@/lib/sample-system";
 import { saveRun } from "@/lib/store";
 import type { BuildInput, BuildResult, WorkflowRun } from "@/lib/types";
@@ -29,10 +30,7 @@ const componentTypes = [
   "Badge",
   "Modal",
   "Select",
-  "Tabs",
   "Toast",
-  "Tooltip",
-  "Table",
 ];
 
 export default function BuildPage() {
@@ -233,6 +231,8 @@ export default function BuildPage() {
           role="region"
           aria-label="Build results"
         >
+          <InspectPrompt renderedPrompt={result.renderedPrompt} />
+
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Badge variant="secondary">{input.componentType}</Badge>
             <span>in {input.context}</span>

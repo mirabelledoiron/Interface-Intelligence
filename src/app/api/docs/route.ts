@@ -14,11 +14,6 @@ export async function POST(request: Request) {
     (c) => c.name.toLowerCase() === input.componentName.toLowerCase()
   );
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    return NextResponse.json(mockDocsResult);
-  }
-
   let prompt;
   try {
     prompt = await loadPrompt("docs-generator", "docs.prompt", {
@@ -31,6 +26,13 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error("Prompt engine error:", err);
     return NextResponse.json(mockDocsResult);
+  }
+
+  const renderedPrompt = { system: prompt.system, user: prompt.user };
+
+  if (!process.env.ANTHROPIC_API_KEY) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    return NextResponse.json({ ...mockDocsResult, renderedPrompt });
   }
 
   let message;
@@ -48,7 +50,7 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("Claude API error:", err);
-    return NextResponse.json(mockDocsResult);
+    return NextResponse.json({ ...mockDocsResult, renderedPrompt });
   }
 
   const text =
@@ -57,12 +59,12 @@ export async function POST(request: Request) {
   try {
     const cleaned = text.replace(/```json\n?/g, "").replace(/```\n?/g, "");
     const result = JSON.parse(cleaned) as DocsResult;
-    return NextResponse.json(result);
+    return NextResponse.json({ ...result, renderedPrompt });
   } catch {
-    console.error("JSON parse failed, raw response:", text.slice(0, 300));
     return NextResponse.json({
       ...mockDocsResult,
       reasoning: text.slice(0, 1000),
+      renderedPrompt,
     });
   }
 }

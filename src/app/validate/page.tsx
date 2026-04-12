@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { SectionCard } from "@/components/section-card";
 import { SeverityBadge } from "@/components/severity-badge";
 import { GeneratingState } from "@/components/loading-states";
+import { InspectPrompt } from "@/components/inspect-prompt";
 import { saveRun } from "@/lib/store";
 import type { ValidateInput, ValidateResult, WorkflowRun } from "@/lib/types";
 import { ShieldCheck, AlertCircle, CheckCircle } from "lucide-react";
@@ -180,6 +181,8 @@ export default function ValidatePage() {
           role="region"
           aria-label="Validation results"
         >
+          <InspectPrompt renderedPrompt={result.renderedPrompt} />
+
           <Card>
             <CardContent className="py-6">
               <div className="flex items-center justify-between">

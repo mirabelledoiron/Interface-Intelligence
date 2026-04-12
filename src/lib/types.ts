@@ -41,6 +41,7 @@ export interface BuildResult {
   apiDesign: string;
   accessibilityNotes: string[];
   reasoning: string;
+  renderedPrompt?: { system: string; user: string };
 }
 
 // Validate Flow types
@@ -61,6 +62,7 @@ export interface ValidateResult {
   issues: ValidationIssue[];
   summary: string;
   reasoning: string;
+  renderedPrompt?: { system: string; user: string };
 }
 
 // Docs Flow types
@@ -78,6 +80,7 @@ export interface DocsResult {
   accessibilityNotes: string[];
   codeExample: string;
   reasoning: string;
+  renderedPrompt?: { system: string; user: string };
 }
 
 // Workflow run tracking

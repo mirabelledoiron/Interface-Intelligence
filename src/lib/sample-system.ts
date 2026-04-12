@@ -116,5 +116,23 @@ export const sampleSystem: DesignSystem = {
       variants: ["neutral", "accent", "success", "warning"],
       props: ["tone"],
     },
+    {
+      name: "Modal",
+      description: "Web Component (<ds-modal>). Overlay uses ds-color-overlay (rgba(23,23,22,0.5) light, rgba(23,23,22,0.74) dark). Content panel uses bg-surface with backdrop-filter blur(20px), radius-xl, shadow-lg. Focus trap on open, restores focus on close. Escape key dismisses. Slots: slot='header' (title area), default slot (body content), slot='footer' (action buttons). Transition uses ds-duration-normal with ds-ease-emphasized.",
+      variants: ["default", "fullscreen", "drawer"],
+      props: ["open", "onClose", "size"],
+    },
+    {
+      name: "Select",
+      description: "Web Component (<ds-select>). Trigger styled like ds-input (min-height 3rem, radius-md, border-subtle). Dropdown panel uses bg-elevated, shadow-lg, radius-md. Options have hover state using bg-inset. Selected option shows accent-colored check icon. Supports keyboard navigation (arrow keys, enter, escape). Emits ds-change event with detail.value.",
+      variants: ["default", "error"],
+      props: ["label", "placeholder", "value", "options", "disabled"],
+    },
+    {
+      name: "Toast",
+      description: "Web Component (<ds-toast>). Positioned bottom-right, stacks vertically with ds-space-3 gap. Uses semantic color tokens for variants: success (ds-color-success), warning (ds-color-warning), error (ds-color-danger), info (ds-color-accent). Auto-dismisses after configurable duration (default 5000ms). Entry animation slides up with ds-ease-decelerate, exit fades with ds-ease-accelerate. Includes optional dismiss button and action slot.",
+      variants: ["success", "warning", "error", "info"],
+      props: ["variant", "duration", "dismissible"],
+    },
   ],
 };

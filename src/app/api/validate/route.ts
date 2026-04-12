@@ -10,11 +10,6 @@ export async function POST(request: Request) {
   const raw = await request.json();
   const input = inputSchema.parse(raw);
 
-  if (!process.env.ANTHROPIC_API_KEY) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    return NextResponse.json(mockValidateResult);
-  }
-
   let prompt;
   try {
     prompt = await loadPrompt("system-validator", "validate.prompt", {
@@ -27,6 +22,13 @@ export async function POST(request: Request) {
   } catch (err) {
     console.error("Prompt engine error:", err);
     return NextResponse.json(mockValidateResult);
+  }
+
+  const renderedPrompt = { system: prompt.system, user: prompt.user };
+
+  if (!process.env.ANTHROPIC_API_KEY) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    return NextResponse.json({ ...mockValidateResult, renderedPrompt });
   }
 
   let message;
@@ -44,7 +46,7 @@ export async function POST(request: Request) {
     });
   } catch (err) {
     console.error("Claude API error:", err);
-    return NextResponse.json(mockValidateResult);
+    return NextResponse.json({ ...mockValidateResult, renderedPrompt });
   }
 
   const text =
@@ -53,12 +55,12 @@ export async function POST(request: Request) {
   try {
     const cleaned = text.replace(/```json\n?/g, "").replace(/```\n?/g, "");
     const result = JSON.parse(cleaned) as ValidateResult;
-    return NextResponse.json(result);
+    return NextResponse.json({ ...result, renderedPrompt });
   } catch {
-    console.error("JSON parse failed, raw response:", text.slice(0, 300));
     return NextResponse.json({
       ...mockValidateResult,
       reasoning: text.slice(0, 1000),
+      renderedPrompt,
     });
   }
 }

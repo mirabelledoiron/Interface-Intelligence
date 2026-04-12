@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { SectionCard } from "@/components/section-card";
 import { CodeBlock } from "@/components/code-block";
 import { GeneratingState } from "@/components/loading-states";
+import { InspectPrompt } from "@/components/inspect-prompt";
 import { sampleSystem } from "@/lib/sample-system";
 import { saveRun } from "@/lib/store";
 import type { DocsInput, DocsResult, WorkflowRun } from "@/lib/types";
@@ -146,6 +147,8 @@ export default function DocsPage() {
           role="region"
           aria-label="Documentation results"
         >
+          <InspectPrompt renderedPrompt={result.renderedPrompt} />
+
           <Badge variant="secondary" className="text-sm">
             {selectedComponent}
           </Badge>
