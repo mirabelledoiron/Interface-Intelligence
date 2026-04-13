@@ -4,8 +4,9 @@ I designed, built, and deployed this product in a single session â€” from idea â
 
 AI-powered design system co-pilot. Build components, validate consistency, and generate documentation -- all grounded in your actual design system.
 
-Author: Mirabelle Doiron
-Domain: interface-intelligence.ai
+**Author:** Mirabelle Doiron
+
+**Domain:** interface-intelligence.ai
 
 ## The Problem
 
