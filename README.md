@@ -258,12 +258,49 @@ workflows/
     workflow.ts
 ```
 
+## Accessibility Testing
+
+90 automated tests across 4 test suites covering WCAG compliance, keyboard navigation, and screen reader support.
+
+```bash
+npm test                # Run all 90 tests
+npm run test:a11y       # WCAG axe scans + aria attribute tests
+npm run test:keyboard   # Keyboard navigation and activation
+npm run test:sr         # Screen reader landmarks, labels, announcements
+```
+
+### What the tests verify
+
+**WCAG Compliance (jest-axe)**
+- Automated axe scans on every page and interactive component
+- No WCAG 2.1 AA violations in any rendered state
+
+**Aria Attributes**
+- All collapsible sections have `aria-expanded`
+- Radio groups have `role="radiogroup"` with `aria-label`
+- Each selectable chip has `role="radio"` with `aria-checked`
+- Copy buttons have descriptive `aria-label` per section
+- Loading states use `role="status"` with `aria-label`
+
+**Keyboard Navigation**
+- All interactive elements reachable via Tab
+- Enter and Space activate radio selections and buttons
+- Focus-visible ring classes present on all interactive elements
+- Textarea fields are focusable and editable via keyboard
+
+**Screen Reader Support**
+- Every page has a level 1 heading
+- Decorative icons have `aria-hidden="true"`
+- Form labels are programmatically associated with inputs
+- Loading state includes sr-only announcement text
+- No buttons use generic labels ("click here", "submit")
+- Severity badges use text labels, not color alone
+
 ## Verification
 
+- Run `npm test` to verify all 90 accessibility tests pass
 - Run `npm run dev`, test all 3 workflows with mock data
 - Test with real Claude API key
-- Test keyboard navigation through all flows
-- Test responsive at mobile/tablet/desktop
 - Deploy to Vercel, verify production build
 
 ## Deploy
