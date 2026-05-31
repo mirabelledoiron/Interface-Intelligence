@@ -1,5 +1,21 @@
 # Interface Intelligence
 
+
+> [!IMPORTANT]
+> **Portfolio Disclaimer**
+>
+> This project was conceived, designed, implemented, and deployed by me as a rapid AI-assisted product build.
+>
+> "Built in a single session" means the project was completed over approximately **20 iterative commits using Claude Code as a development assistant**, with me directing the product strategy, UX, architecture, workflow design, implementation decisions, testing approach, and deployment.
+>
+> AI was used as a coding and implementation accelerator, similar to how modern engineering teams use AI development tools. The product concept, workflow design, user experience, design system strategy, technical architecture, and final implementation decisions were mine.
+>
+> This project is intended to demonstrate how I work in an AI-first environment and how I design and build AI-powered products from concept to production.
+>
+> Is it ready to be use as a design system co-pilot that helps users find patterns, understand constraints, and move from idea to implementation faster.
+
+---
+
 I designed, built, and deployed this product in a single session — from idea → architecture → UI → API → production.
 
 AI-powered design system co-pilot. Build components, validate consistency, and generate documentation -- all grounded in your actual design system.
@@ -10,19 +26,19 @@ AI-powered design system co-pilot. Build components, validate consistency, and g
 
 ## The Problem
 
-Design systems exist in Figma, in code, and in documentation -- but AI tools ignore all of it. When teams use AI to generate UI, the output uses generic colors, arbitrary spacing, and misses accessibility requirements. The result: inconsistency, redundant work, and broken compliance.
+Design systems exist in Figma, in code, and in documentation - but AI tools ignore all of it. When teams use AI to generate UI, the output uses generic colors, arbitrary spacing, and misses accessibility requirements. The result: inconsistency, redundant work, and broken compliance.
 
 Interface Intelligence makes AI system-aware. Instead of "generate a modal," you get "generate a modal using our tokens, following our patterns, meeting our WCAG level." Every output references your actual token names, explains why it chose them, and flags accessibility requirements.
 
-That's the exact gap GrowthX fills for their clients -- they build the experience layer around AI agents. This product demonstrates that job.
+That's the exact gap GrowthX fills for their clients - they build the experience layer around AI agents. This product demonstrates that job.
 
 ## Context
 
-Portfolio piece for the GrowthX AI Design Engineer application. Demonstrates designing and building the experience layer around an AI agent -- the exact role. Uses Output.ai workflow patterns. Built and deployed in a single session.
+Portfolio piece for the GrowthX AI Design Engineer application. Demonstrates designing and building the experience layer around an AI agent - the exact role. Uses Output.ai workflow patterns. Built and deployed in a single session.
 
 ## Concept
 
-Teams connect their tokens and components, then use guided workflows to build components, validate consistency, and generate documentation -- all grounded in their actual system. The AI doesn't generate from scratch. It generates within a system.
+Teams connect their tokens and components, then use guided workflows to build components, validate consistency, and generate documentation - all grounded in their actual system. The AI doesn't generate from scratch. It generates within a system.
 
 ## Tech Stack
 
